@@ -1,6 +1,9 @@
 package models
 
 import models.Base._
+import scalaz.{Foldable, Monoid}
+import scalaz._
+import Scalaz._
 
 /**
  * Created by gbougeard on 21/05/14.
@@ -55,13 +58,23 @@ object Cards {
 
   case class Cost(resources:Set[Resource], funding:Funding)
 
-  trait Monoid[Cost] {
-    val zero = Cost(Set(), Funding(0))
+  implicit object CostMonoid extends Monoid[Cost]{
+    override def zero: Cost = Cost(Set(), Funding(0))
 
-    def append(s1: Cost, s2: => Cost): Cost = {
-      Cost(s1.resources ++ s2.resources, Funding(s1.funding + s2.funding))
-    }
+    override def append(f1: Cost, f2: => Cost): Cost =  Cost(f1.resources ++ f2.resources, Funding(f1.funding.value + f2.funding.value))
+
   }
+
+//  implicit def CostSemigroup: Semigroup[Cost] = semigroup((f1, f2) => Cost(f1.resources ++ f2.resources, Funding(f1.funding.value + f2.funding.value)))
+//  implicit def CostZero: Zero[Cost] = zero(Cost(Set(), Funding(0)))
+
+//  trait Monoid[Cost] {
+//    val zero = Cost(Set(), Funding(0))
+//
+//    def append(s1: Cost, s2: => Cost): Cost = {
+//      Cost(s1.resources ++ s2.resources, Funding(s1.funding + s2.funding))
+//    }
+//  }
 
 
   case class Card(cName: String,
@@ -84,14 +97,16 @@ object Cards {
   lazy val everyone = myself ++ neighbors
 
   def cost(needs: String): Cost = {
-    val costs = needs.map(costBy).toList
+    val costs = needs.map(toCost).toList
     println(costs)
-//    costs.foldLeft(Cost(Set(), Funding(0)))(Cost(_ ++ _.resources, Funding(_ + _.funding.value) ))
-    costs.head
-
+//    costs.
+    val costs2 = needs.toCharArray.foldMap(toCost)
+    println(s"foldmap that shit $costs2")
+    costs2
   }
 
-  def costBy(resource: Char): Cost = {
+  def toCost(resource: Char): Cost = {
+   println(s"toCost $resource")
     resource match {
       case 'Y' => Cost(Set(Youthfullness), Funding(0))
       case 'V' => Cost(Set(Vision), Funding(0))
