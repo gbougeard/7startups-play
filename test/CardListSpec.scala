@@ -1,6 +1,6 @@
 import models.Base._
 import models.Cards._
-import models.CardList
+import models.{Cards, CardList}
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
@@ -32,6 +32,13 @@ class CardListSpec extends Specification {
       CardList.getMaxStage(CompanyProfile(Facebook, ASide)) must beEqualTo(Stage3)
       CardList.getMaxStage(CompanyProfile(Twitter, ASide)) must beEqualTo(Stage3)
       CardList.getMaxStage(CompanyProfile(Twitter, BSide)) must beEqualTo(Stage3)
+    }
+
+    "calculate the right cost" in {
+      Cards.cost("Y") must beEqualTo(Cost(Set(Youthfullness), Funding(0)))
+      Cards.cost("YV") must beEqualTo(Cost(Set(Youthfullness, Vision), Funding(0)))
+      Cards.cost("Y$") must beEqualTo(Cost(Set(Youthfullness), Funding(1)))
+      Cards.cost("YY") must beEqualTo(Cost(Set(Youthfullness), Funding(0)))
     }
 
   }

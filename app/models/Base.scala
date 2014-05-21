@@ -51,24 +51,15 @@ object Base {
   
 
   sealed trait Resource
-
   sealed trait BaseResource extends Resource
-
   sealed trait AdvancedResource extends Resource
-
-  sealed trait Youthfullness extends AdvancedResource
-
-  sealed trait Vision extends AdvancedResource
-
-  sealed trait Adoption extends AdvancedResource
-
-  sealed trait Development extends BaseResource
-
-  sealed trait Operations extends BaseResource
-
-  sealed trait Marketing extends BaseResource
-
-  sealed trait Finance extends BaseResource
+  object Youthfullness extends AdvancedResource
+  object Vision extends AdvancedResource
+  object Adoption extends AdvancedResource
+  object Development extends BaseResource
+  object Operations extends BaseResource
+  object Marketing extends BaseResource
+  object Finance extends BaseResource
 
   case class Poacher(value: Int)
 

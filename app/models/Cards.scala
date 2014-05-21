@@ -69,11 +69,33 @@ object Cards {
                                 cStage: CompanyStage,
                                 cCost: Cost,
                                 cEffect: Effect)
-  
- 
-   lazy val myself:Target = Set(Own)
-   lazy val neighbors:Target = Set(NLeft, NRight)
-   lazy val everyone = myself ++ neighbors
+
+
+  lazy val myself: Target = Set(Own)
+  lazy val neighbors: Target = Set(NLeft, NRight)
+  lazy val everyone = myself ++ neighbors
+
+  def cost(needs: String): Cost = {
+    val costs = needs.map(costBy).toList
+    println(costs)
+//    costs.foldLeft(Cost(Set(), Funding(0)))(Cost(_ ++ _.resources, Funding(_ + _.funding.value) ))
+    costs.head
+
+  }
+
+  def costBy(resource: Char): Cost = {
+    resource match {
+      case 'Y' => Cost(Set(Youthfullness), Funding(0))
+      case 'V' => Cost(Set(Vision), Funding(0))
+      case 'A' => Cost(Set(Adoption), Funding(0))
+      case 'D' => Cost(Set(Development), Funding(0))
+      case 'O' => Cost(Set(Operations), Funding(0))
+      case 'M' => Cost(Set(Marketing), Funding(0))
+      case 'F' => Cost(Set(Finance), Funding(0))
+      case '$' => Cost(Set(), Funding(1))
+      case _ => throw new IllegalArgumentException("Invalid cost string")
+    }
+  }
 
 
 }
