@@ -55,6 +55,14 @@ object Cards {
 
   case class Cost(resources:Set[Resource], funding:Funding)
 
+  trait Monoid[Cost] {
+    val zero = Cost(Set(), Funding(0))
+
+    def append(s1: Cost, s2: => Cost): Cost = {
+      Cost(s1.resources ++ s2.resources, Funding(s1.funding + s2.funding))
+    }
+  }
+
 
   case class Card(cName: String,
                   cMinPlayers: PlayerCount,
