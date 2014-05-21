@@ -27,7 +27,7 @@ object Cards {
   type Target = Set[EffectDirection]
 
   sealed trait Condition
-  sealed object HappensOnce extends Condition
+  object HappensOnce extends Condition
   case class PerCard(target:Target, cardTypes:Set[CardType]) extends Condition
   case class ByPoaching(target:Target, poachingOutcomes:Set[PoachingOutcome]) extends Condition
   case class ByStartupStage(target:Target) extends Condition

@@ -17,19 +17,19 @@ object Base {
 
   sealed trait Project extends CompanyStage
 
-  sealed trait Stage1 extends CompanyStage
+  object Stage1 extends CompanyStage
 
-  sealed trait Stage2 extends CompanyStage
+  object Stage2 extends CompanyStage
 
-  sealed trait Stage3 extends CompanyStage
+  object Stage3 extends CompanyStage
 
-  sealed trait Stage4 extends CompanyStage
+  object Stage4 extends CompanyStage
 
   sealed trait Company
 
-  sealed trait Facebook extends Company
+  object Facebook extends Company
 
-  sealed trait Twitter extends Company
+  object Twitter extends Company
 
   sealed trait Apple extends Company
 
@@ -39,15 +39,15 @@ object Base {
 
   sealed trait Amazon extends Company
 
-  sealed trait Microsoft extends Company
+  object Microsoft extends Company
 
   sealed trait CompanySide
 
-  sealed trait ASide extends CompanySide
+  object ASide extends CompanySide
 
-  sealed trait BSide extends CompanySide
+  object BSide extends CompanySide
   
-  case class CompanyProfile(profile:CompanyProfile, company:Company, side:CompanySide)
+  case class CompanyProfile(company:Company, side:CompanySide)
   
 
   sealed trait Resource
