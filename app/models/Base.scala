@@ -7,11 +7,11 @@ object Base {
 
   sealed trait Age
 
-  sealed trait Age1 extends Age
+  object Age1 extends Age
 
-  sealed trait Age2 extends Age
+  object Age2 extends Age
 
-  sealed trait Age3 extends Age
+  object Age3 extends Age
 
   sealed trait CompanyStage
 
@@ -70,36 +70,29 @@ object Base {
 
   sealed trait Finance extends BaseResource
 
-  sealed case class Poacher(value: Int)
+  case class Poacher(value: Int)
 
-  sealed case class VictoryPoint(value: Int)
+  case class VictoryPoint(value: Int)
 
-  sealed case class Funding(value: Int)
+  case class Funding(value: Int)
 
-  sealed case class PlayerCount(value: Int)
+  case class PlayerCount(value: Int)
 
   sealed case class Turn(value: Int)
 
   sealed trait PoachingOutcome
-  sealed trait Defeat extends PoachingOutcome
-  sealed trait Victory extends PoachingOutcome with Age
+  object Defeat extends PoachingOutcome
+  object Victory extends PoachingOutcome with Age
 
 
   sealed trait VictoryType
-
-  sealed trait PoachingVictory extends VictoryType
-
-  sealed trait FundingVictory extends VictoryType
-
-  sealed trait CompanyVictory extends VictoryType
-
-  sealed trait InfrastructureVictory extends VictoryType
-
-  sealed trait RnDVictory extends VictoryType
-
-  sealed trait CommercialVictory extends VictoryType
-
-  sealed trait CommunityVictory extends VictoryType
+  object PoachingVictory extends VictoryType
+  object FundingVictory extends VictoryType
+  object CompanyVictory extends VictoryType
+  object InfrastructureVictory extends VictoryType
+  object RnDVictory extends VictoryType
+  object CommercialVictory extends VictoryType
+  object CommunityVictory extends VictoryType
 
 
 }
