@@ -61,8 +61,8 @@ object Cards {
                   cAge: Age,
                   cType: CardType,
                   cCost: Cost,
-                  cFree: Option[String],
-                  cEffect: Option[Effect]
+                  cFree: Set[String],
+                  cEffect: Set[Effect]
                    )
 
   sealed case class CompanyCard(cCompany: CompanyProfile,
