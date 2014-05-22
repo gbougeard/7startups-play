@@ -46,13 +46,15 @@ class CardListSpec extends Specification {
     }
 
     "getResourceCard for A Side at Project stage" in {
-      CardList.getResourceCard(CompanyProfile(Facebook, ASide), Project)  must beEqualTo(CompanyCard(CompanyProfile(Facebook, ASide), Project, Cost.empty, ProvideResource(Finance, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Twitter, ASide), Project)   must beEqualTo(CompanyCard(CompanyProfile(Twitter, ASide), Project, Cost.empty, ProvideResource(Youthfulness, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Apple, ASide), Project)     must beEqualTo(CompanyCard(CompanyProfile(Apple, ASide), Project, Cost.empty, ProvideResource(Vision, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Google, ASide), Project)    must beEqualTo(CompanyCard(CompanyProfile(Google, ASide), Project, Cost.empty, ProvideResource(Development, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Yahoo, ASide), Project)     must beEqualTo(CompanyCard(CompanyProfile(Yahoo, ASide), Project, Cost.empty, ProvideResource(Marketing, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Amazon, ASide), Project)    must beEqualTo(CompanyCard(CompanyProfile(Amazon, ASide), Project, Cost.empty, ProvideResource(Adoption, 1, Shared)))
-      CardList.getResourceCard(CompanyProfile(Microsoft, ASide), Project) must beEqualTo(CompanyCard(CompanyProfile(Microsoft, ASide), Project, Cost.empty, ProvideResource(Operations, 1, Shared)))
+      val side = ASide
+      val stage = Project
+      CardList.getResourceCard(CompanyProfile(Facebook, side), stage)  must beEqualTo(CompanyCard(CompanyProfile(Facebook, side), stage, Cost.empty, Set(ProvideResource(Finance, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Twitter, side), stage)   must beEqualTo(CompanyCard(CompanyProfile(Twitter, side), stage, Cost.empty, Set(ProvideResource(Youthfulness, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Apple, side), stage)     must beEqualTo(CompanyCard(CompanyProfile(Apple, side), stage, Cost.empty, Set(ProvideResource(Vision, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Google, side), stage)    must beEqualTo(CompanyCard(CompanyProfile(Google, side), stage, Cost.empty, Set(ProvideResource(Development, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Yahoo, side), stage)     must beEqualTo(CompanyCard(CompanyProfile(Yahoo, side), stage, Cost.empty, Set(ProvideResource(Marketing, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Amazon, side), stage)    must beEqualTo(CompanyCard(CompanyProfile(Amazon, side), stage, Cost.empty, Set(ProvideResource(Adoption, 1, Shared))))
+      CardList.getResourceCard(CompanyProfile(Microsoft, side), stage) must beEqualTo(CompanyCard(CompanyProfile(Microsoft, side), stage, Cost.empty, Set(ProvideResource(Operations, 1, Shared))))
     }
 
   }

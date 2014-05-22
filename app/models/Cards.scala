@@ -47,7 +47,7 @@ object Cards {
   sealed trait Effect
   case class ProvideResource(resource:Resource, nb:Int, sharing:Sharing) extends Effect
   case class ResourceChoice(resources:Set[Resource],sharing:Sharing) extends Effect
-  case class CheapExchange(resources:Set[Resource], sharing:Sharing, neighbors:Set[Neighbor]) extends Effect
+  case class CheapExchange(resources:Set[Resource], neighbors:Set[Neighbor]) extends Effect
   case class AddVictory(victoryType:VictoryType, victoryPoint:VictoryPoint, condition:Condition) extends Effect
   case class GainFunding(funding:Funding, condition:Condition) extends Effect
   case class RnD(researchType:ResearchType) extends Effect
@@ -90,13 +90,13 @@ object Cards {
                   cType: CardType,
                   cCost: Cost,
                   cFree: Set[String],
-                  cEffect: Set[Effect]
+                  cEffects: Set[Effect]
                    ) extends Card
 
   case class CompanyCard(cCompany: CompanyProfile,
                                 cStage: CompanyStage,
                                 cCost: Cost,
-                                cEffect: Effect) extends Card
+                                cEffects: Set[Effect]) extends Card
 
 
   lazy val myself: Target = Set(Own)
