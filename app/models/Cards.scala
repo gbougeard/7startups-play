@@ -45,16 +45,16 @@ object Cards {
   object CustomSolution extends ResearchType
 
   sealed trait Effect
-  case class ProvideResource(resource:Resource, nb:Int, sharing:Sharing) extends Effect
-  case class ResourceChoice(resources:Set[Resource],sharing:Sharing) extends Effect
-  case class CheapExchange(resources:Set[Resource], neighbors:Set[Neighbor]) extends Effect
-  case class AddVictory(victoryType:VictoryType, victoryPoint:VictoryPoint, condition:Condition) extends Effect
-  case class GainFunding(funding:Funding, condition:Condition) extends Effect
-  case class RnD(researchType:ResearchType) extends Effect
-  case class Poaching(poacher:Poacher) extends Effect
+  case class ProvideResource(resource: Resource, nb: Int, sharing: Sharing) extends Effect
+  case class ResourceChoice(resources: Set[Resource], sharing: Sharing) extends Effect
+  case class CheapExchange(resources: Set[Resource], neighbors: Set[Neighbor]) extends Effect
+  case class AddVictory(victoryType: VictoryType, victoryPoint: VictoryPoint, condition: Condition) extends Effect
+  case class GainFunding(funding: Funding, condition: Condition) extends Effect
+  case class RnD(researchType: ResearchType) extends Effect
+  case class Poaching(poacher: Poacher) extends Effect
   object ScientificBreakthrough extends Effect
   object Recycling extends Effect
-  case class Opportunity(ages:Set[Age]) extends Effect
+  case class Opportunity(ages: Set[Age]) extends Effect
   object Efficiency extends Effect
   object CopyCommunity extends Effect
 
@@ -84,6 +84,8 @@ object Cards {
                                 cStage: CompanyStage,
                                 cCost: Cost,
                                 cEffects: Set[Effect]) extends Card
+
+  type Exchange = Map[Neighbor, Bag[Resource]]
 
 
   lazy val myself: Target = Set(Own)
