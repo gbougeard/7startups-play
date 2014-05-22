@@ -58,12 +58,12 @@ object Cards {
   object Efficiency extends Effect
   object CopyCommunity extends Effect
 
+  implicit val bagResource = Bag.configuration.compact[Resource]
   case class Cost(resources:Bag[Resource], funding:Funding)
+
   object Cost {
     def empty = Cost(Bag.empty, Funding(0))
   }
-
-  implicit val bagResource = Bag.configuration.compact[Resource]
 
   implicit object CostMonoid extends Monoid[Cost]{
     override def zero: Cost = Cost.empty

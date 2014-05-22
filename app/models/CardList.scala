@@ -12,7 +12,6 @@ object CardList {
     profile match {
       case CompanyProfile(Facebook, BSide) => Stage2
       case CompanyProfile(Microsoft, BSide) => Stage4
-      case CompanyProfile(Microsoft, _) => Stage4
       case _ => Stage3
     }
   }

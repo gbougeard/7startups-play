@@ -1,5 +1,8 @@
 import models.Base._
+import models.Base.CompanyProfile
+import models.Base.Funding
 import models.Cards._
+import models.Cards.ProvideResource
 import models.{Cards, CardList}
 import org.specs2.mutable._
 import org.specs2.runner._
@@ -40,6 +43,16 @@ class CardListSpec extends Specification {
       Cards.cost("YV") must beEqualTo(Cost(Bag.from(Youthfulness -> 1, Vision -> 1), Funding(0)))
       Cards.cost("Y$") must beEqualTo(Cost(Bag.from(Youthfulness -> 1), Funding(1)))
       Cards.cost("YY") must beEqualTo(Cost(Bag.from(Youthfulness -> 2), Funding(0)))
+    }
+
+    "getResourceCard for A Side at Project stage" in {
+      CardList.getResourceCard(CompanyProfile(Facebook, ASide), Project)  must beEqualTo(CompanyCard(CompanyProfile(Facebook, ASide), Project, Cost.empty, ProvideResource(Finance, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Twitter, ASide), Project)   must beEqualTo(CompanyCard(CompanyProfile(Twitter, ASide), Project, Cost.empty, ProvideResource(Youthfulness, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Apple, ASide), Project)     must beEqualTo(CompanyCard(CompanyProfile(Apple, ASide), Project, Cost.empty, ProvideResource(Vision, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Google, ASide), Project)    must beEqualTo(CompanyCard(CompanyProfile(Google, ASide), Project, Cost.empty, ProvideResource(Development, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Yahoo, ASide), Project)     must beEqualTo(CompanyCard(CompanyProfile(Yahoo, ASide), Project, Cost.empty, ProvideResource(Marketing, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Amazon, ASide), Project)    must beEqualTo(CompanyCard(CompanyProfile(Amazon, ASide), Project, Cost.empty, ProvideResource(Adoption, 1, Shared)))
+      CardList.getResourceCard(CompanyProfile(Microsoft, ASide), Project) must beEqualTo(CompanyCard(CompanyProfile(Microsoft, ASide), Project, Cost.empty, ProvideResource(Operations, 1, Shared)))
     }
 
   }
