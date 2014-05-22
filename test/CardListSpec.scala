@@ -39,10 +39,10 @@ class CardListSpec extends Specification {
     }
 
     "calculate the right cost" in {
-      Cards.cost("Y")  must beEqualTo(Cost(Bag.from(Youthfulness -> 1), Funding(0)))
-      Cards.cost("YV") must beEqualTo(Cost(Bag.from(Youthfulness -> 1, Vision -> 1), Funding(0)))
-      Cards.cost("Y$") must beEqualTo(Cost(Bag.from(Youthfulness -> 1), Funding(1)))
-      Cards.cost("YY") must beEqualTo(Cost(Bag.from(Youthfulness -> 2), Funding(0)))
+      Cards.cost("Y")  must beEqualTo(Cost(Bag.from(Youthfulness -> 1), 0))
+      Cards.cost("YV") must beEqualTo(Cost(Bag.from(Youthfulness -> 1, Vision -> 1), 0))
+      Cards.cost("Y$") must beEqualTo(Cost(Bag.from(Youthfulness -> 1), 1))
+      Cards.cost("YY") must beEqualTo(Cost(Bag.from(Youthfulness -> 2), 0))
     }
 
     "getResourceCard for A Side at Project stage" in {

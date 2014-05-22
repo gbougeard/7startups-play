@@ -46,15 +46,11 @@ object Base {
   val baseResources:Set[Resource] = Set(Development, Operations, Marketing, Finance) 
   val advancedResources:Set[Resource] = Set(Adoption, Vision, Youthfulness) 
 
-  case class Poacher(value: Int)
-
-  case class VictoryPoint(value: Int)
-
-  case class Funding(value: Int)
-
-  case class PlayerCount(value: Int)
-
-  sealed case class Turn(value: Int)
+  type Poacher = Int
+  type VictoryPoint = Int
+  type Funding = Int
+  type PlayerCount = Int
+  type Turn = Int
 
   sealed trait PoachingOutcome
   object Defeat extends PoachingOutcome
