@@ -67,21 +67,8 @@ object Cards {
 
   implicit object CostMonoid extends Monoid[Cost]{
     override def zero: Cost = Cost.empty
-
     override def append(f1: Cost, f2: => Cost): Cost =  Cost(f1.resources ++ f2.resources, f1.funding + f2.funding)
-
   }
-
-//  implicit def CostSemigroup: Semigroup[Cost] = semigroup((f1, f2) => Cost(f1.resources ++ f2.resources, Funding(f1.funding.value + f2.funding.value)))
-//  implicit def CostZero: Zero[Cost] = zero(Cost(Set(), 0))
-
-//  trait Monoid[Cost] {
-//    val zero = Cost(Set(), 0)
-//
-//    def append(s1: Cost, s2: => Cost): Cost = {
-//      Cost(s1.resources ++ s2.resources, Funding(s1.funding + s2.funding))
-//    }
-//  }
 
   sealed trait Card
   case class RegularCard(cName: String,

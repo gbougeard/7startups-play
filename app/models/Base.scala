@@ -56,7 +56,6 @@ object Base {
   object Defeat extends PoachingOutcome
   object Victory extends PoachingOutcome with Age
 
-
   sealed trait VictoryType
   object PoachingVictory extends VictoryType
   object FundingVictory extends VictoryType
