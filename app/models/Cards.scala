@@ -36,6 +36,7 @@ object Cards {
   case class ByStartupStage(target:Target) extends Condition
 
   sealed trait Sharing
+  object Shared extends Sharing
   object Kept extends Sharing
 
   sealed trait ResearchType
@@ -58,11 +59,14 @@ object Cards {
   object CopyCommunity extends Effect
 
   case class Cost(resources:Bag[Resource], funding:Funding)
+  object Cost {
+    def empty = Cost(Bag.empty, Funding(0))
+  }
 
   implicit val bagResource = Bag.configuration.compact[Resource]
 
   implicit object CostMonoid extends Monoid[Cost]{
-    override def zero: Cost = Cost(Bag.empty, Funding(0))
+    override def zero: Cost = Cost.empty
 
     override def append(f1: Cost, f2: => Cost): Cost =  Cost(f1.resources ++ f2.resources, Funding(f1.funding.value + f2.funding.value))
 
@@ -79,20 +83,20 @@ object Cards {
 //    }
 //  }
 
-
-  case class Card(cName: String,
+  sealed trait Card
+  case class RegularCard(cName: String,
                   cMinPlayers: PlayerCount,
                   cAge: Age,
                   cType: CardType,
                   cCost: Cost,
                   cFree: Set[String],
                   cEffect: Set[Effect]
-                   )
+                   ) extends Card
 
-  sealed case class CompanyCard(cCompany: CompanyProfile,
+  case class CompanyCard(cCompany: CompanyProfile,
                                 cStage: CompanyStage,
                                 cCost: Cost,
-                                cEffect: Effect)
+                                cEffect: Effect) extends Card
 
 
   lazy val myself: Target = Set(Own)
@@ -105,7 +109,7 @@ object Cards {
 
   def toCost(resource: Char): Cost = {
     resource match {
-      case 'Y' => Cost(Bag(Youthfullness), Funding(0))
+      case 'Y' => Cost(Bag(Youthfulness), Funding(0))
       case 'V' => Cost(Bag(Vision), Funding(0))
       case 'A' => Cost(Bag(Adoption), Funding(0))
       case 'D' => Cost(Bag(Development), Funding(0))

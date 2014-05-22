@@ -12,11 +12,64 @@ object CardList {
     profile match {
       case CompanyProfile(Facebook, BSide) => Stage2
       case CompanyProfile(Microsoft, BSide) => Stage4
+      case CompanyProfile(Microsoft, _) => Stage4
       case _ => Stage3
     }
   }
 
-  //  def getResourceCard(profile:CompanyProfile):CompanyStage
+  def getResourceCard(profile: CompanyProfile, stage: CompanyStage): Card = {
+    stage match {
+      case Project => {
+        val resource: Resource = profile match {
+          case CompanyProfile(Facebook, ASide)  => Finance
+          case CompanyProfile(Twitter, ASide)   => Youthfulness
+          case CompanyProfile(Apple, ASide)     => Vision
+          case CompanyProfile(Google, ASide)    => Development
+          case CompanyProfile(Yahoo, ASide)     => Marketing
+          case CompanyProfile(Amazon, ASide)    => Adoption
+          case CompanyProfile(Microsoft, ASide) => Operations
+        }
+        CompanyCard(profile, Project, Cost.empty, ProvideResource(resource, 1, Shared))
+
+      }
+      case Stage1 => {
+        val c: Cost = profile match {
+          case CompanyProfile(Facebook, ASide)  => cost("MM")
+          case CompanyProfile(Twitter, ASide)   => cost("OO")
+          case CompanyProfile(Apple, ASide)     => cost("OO")
+          case CompanyProfile(Google, ASide)    => cost("DD")
+          case CompanyProfile(Yahoo, ASide)     => cost("MM")
+          case CompanyProfile(Amazon, ASide)    => cost("DD")
+          case CompanyProfile(Microsoft, ASide) => cost("OO")
+        }
+        CompanyCard(profile, Stage1, c, AddVictory(CompanyVictory, VictoryPoint(3), HappensOnce))
+      }
+      case Stage2 => {
+        val (c, e): (Cost, Effect) = profile match {
+          case CompanyProfile(Facebook, ASide)  => (cost("MM"), Poaching(Poacher(2)))
+          case CompanyProfile(Twitter, ASide)   => (cost("OO"), ResourceChoice(baseResources, Kept))
+          case CompanyProfile(Apple, ASide)     => (cost("OO"), GainFunding(Funding(9), HappensOnce))
+          case CompanyProfile(Google, ASide)    => (cost("DD"), ScientificBreakthrough)
+          case CompanyProfile(Yahoo, ASide)     => (cost("MM"), Opportunity(Set(Age1, Age2, Age3)))
+          case CompanyProfile(Amazon, ASide)    => (cost("DD"), Recycling)
+          case CompanyProfile(Microsoft, ASide) => (cost("OO"), AddVictory(CompanyVictory, VictoryPoint(5), HappensOnce))
+        }
+        CompanyCard(profile, Stage1, c, e)
+      }
+      case Stage3 => {
+        val c: Cost = profile match {
+          case CompanyProfile(Facebook, ASide)  => cost("FFFF")
+          case CompanyProfile(Twitter, ASide)   => cost("YY")
+          case CompanyProfile(Apple, ASide)     => cost("VV")
+          case CompanyProfile(Google, ASide)    => cost("DDDD")
+          case CompanyProfile(Yahoo, ASide)     => cost("FF")
+          case CompanyProfile(Amazon, ASide)    => cost("AA")
+          case CompanyProfile(Microsoft, ASide) => cost("OOOO")
+        }
+        CompanyCard(profile, Stage3, c, AddVictory(CompanyVictory, VictoryPoint(3), HappensOnce))
+      }
+    }
+  }
 
   lazy val communities: Set[Card] = Set(
     community("Workers Union",        cost("FFDOM"),  Set(perCard(VictoryPoint(1), neighbors, Set(BaseResource)))),  // "FFDOM"
@@ -32,7 +85,7 @@ object CardList {
   )
 
   def community(name: String, cost: Cost, effect: Set[Effect]): Card =
-    Card(cName = name,
+    RegularCard(cName = name,
       cMinPlayers = PlayerCount(0),
       cAge = Age3,
       cType = Community,

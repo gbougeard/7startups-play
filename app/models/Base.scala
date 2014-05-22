@@ -6,60 +6,45 @@ package models
 object Base {
 
   sealed trait Age
-
   object Age1 extends Age
-
   object Age2 extends Age
-
   object Age3 extends Age
 
   sealed trait CompanyStage
-
-  sealed trait Project extends CompanyStage
-
+  object Project extends CompanyStage
   object Stage1 extends CompanyStage
-
   object Stage2 extends CompanyStage
-
   object Stage3 extends CompanyStage
-
   object Stage4 extends CompanyStage
 
   sealed trait Company
-
   object Facebook extends Company
-
   object Twitter extends Company
-
-  sealed trait Apple extends Company
-
-  sealed trait Google extends Company
-
-  sealed trait Yahoo extends Company
-
-  sealed trait Amazon extends Company
-
+  object Apple extends Company
+  object Google extends Company
+  object Yahoo extends Company
+  object Amazon extends Company
   object Microsoft extends Company
 
   sealed trait CompanySide
-
   object ASide extends CompanySide
-
   object BSide extends CompanySide
   
   case class CompanyProfile(company:Company, side:CompanySide)
-  
 
   sealed trait Resource
   sealed trait BaseResource extends Resource
   sealed trait AdvancedResource extends Resource
-  object Youthfullness extends AdvancedResource
+  object Youthfulness extends AdvancedResource
   object Vision extends AdvancedResource
   object Adoption extends AdvancedResource
   object Development extends BaseResource
   object Operations extends BaseResource
   object Marketing extends BaseResource
   object Finance extends BaseResource
+  
+  val baseResources:Set[Resource] = Set(Development, Operations, Marketing, Finance) 
+  val advancedResources:Set[Resource] = Set(Adoption, Vision, Youthfulness) 
 
   case class Poacher(value: Int)
 
