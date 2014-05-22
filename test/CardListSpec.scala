@@ -8,6 +8,7 @@ import org.junit.runner._
 
 import play.api.test._
 import play.api.test.Helpers._
+import scala.collection.Bag
 
 
 /**
@@ -35,10 +36,10 @@ class CardListSpec extends Specification {
     }
 
     "calculate the right cost" in {
-      Cards.cost("Y") must beEqualTo(Cost(Set(Youthfullness), Funding(0)))
-      Cards.cost("YV") must beEqualTo(Cost(Set(Youthfullness, Vision), Funding(0)))
-      Cards.cost("Y$") must beEqualTo(Cost(Set(Youthfullness), Funding(1)))
-      Cards.cost("YY") must beEqualTo(Cost(Set(Youthfullness), Funding(0)))
+      Cards.cost("Y") must beEqualTo(Cost(Bag.from(Youthfullness -> 1), Funding(0)))
+      Cards.cost("YV") must beEqualTo(Cost(Bag.from(Youthfullness -> 1, Vision -> 1), Funding(0)))
+      Cards.cost("Y$") must beEqualTo(Cost(Bag.from(Youthfullness -> 1), Funding(1)))
+      Cards.cost("YY") must beEqualTo(Cost(Bag.from(Youthfullness -> 2), Funding(0)))
     }
 
   }

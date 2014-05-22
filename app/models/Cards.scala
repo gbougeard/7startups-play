@@ -4,6 +4,7 @@ import models.Base._
 import scalaz.{Foldable, Monoid}
 import scalaz._
 import Scalaz._
+import scala.collection.Bag
 
 /**
  * Created by gbougeard on 21/05/14.
@@ -20,10 +21,10 @@ object Cards {
   object Community extends CardType
 
   sealed trait Neighbor
+  object NLeft extends Neighbor
+  object NRight extends Neighbor
   sealed trait EffectDirection
-  sealed trait Neighboring extends EffectDirection with Neighbor
-  object NLeft extends Neighboring
-  object NRight extends Neighboring
+  case class Neighboring(neighbor:Neighbor) extends EffectDirection
   object Own extends EffectDirection
 
   type Target = Set[EffectDirection]
@@ -56,10 +57,12 @@ object Cards {
   object Efficiency extends Effect
   object CopyCommunity extends Effect
 
-  case class Cost(resources:Set[Resource], funding:Funding)
+  case class Cost(resources:Bag[Resource], funding:Funding)
+
+  implicit val bagResource = Bag.configuration.compact[Resource]
 
   implicit object CostMonoid extends Monoid[Cost]{
-    override def zero: Cost = Cost(Set(), Funding(0))
+    override def zero: Cost = Cost(Bag.empty, Funding(0))
 
     override def append(f1: Cost, f2: => Cost): Cost =  Cost(f1.resources ++ f2.resources, Funding(f1.funding.value + f2.funding.value))
 
@@ -93,29 +96,23 @@ object Cards {
 
 
   lazy val myself: Target = Set(Own)
-  lazy val neighbors: Target = Set(NLeft, NRight)
+  lazy val neighbors: Target = Set(Neighboring(NLeft), Neighboring(NRight))
   lazy val everyone = myself ++ neighbors
 
   def cost(needs: String): Cost = {
-    val costs = needs.map(toCost).toList
-    println(costs)
-//    costs.
-    val costs2 = needs.toCharArray.foldMap(toCost)
-    println(s"foldmap that shit $costs2")
-    costs2
+    needs.toList.foldMap(toCost)
   }
 
   def toCost(resource: Char): Cost = {
-   println(s"toCost $resource")
     resource match {
-      case 'Y' => Cost(Set(Youthfullness), Funding(0))
-      case 'V' => Cost(Set(Vision), Funding(0))
-      case 'A' => Cost(Set(Adoption), Funding(0))
-      case 'D' => Cost(Set(Development), Funding(0))
-      case 'O' => Cost(Set(Operations), Funding(0))
-      case 'M' => Cost(Set(Marketing), Funding(0))
-      case 'F' => Cost(Set(Finance), Funding(0))
-      case '$' => Cost(Set(), Funding(1))
+      case 'Y' => Cost(Bag(Youthfullness), Funding(0))
+      case 'V' => Cost(Bag(Vision), Funding(0))
+      case 'A' => Cost(Bag(Adoption), Funding(0))
+      case 'D' => Cost(Bag(Development), Funding(0))
+      case 'O' => Cost(Bag(Operations), Funding(0))
+      case 'M' => Cost(Bag(Marketing), Funding(0))
+      case 'F' => Cost(Bag(Finance), Funding(0))
+      case '$' => Cost(Bag.empty, Funding(1))
       case _ => throw new IllegalArgumentException("Invalid cost string")
     }
   }
