@@ -41,6 +41,6 @@ object GameTypes {
 
   sealed trait CommunicationType
   case class PlayerCom(playerId: PlayerId, com: Communication) extends CommunicationType
-  case class BroasdcastCom(com: Communication) extends CommunicationType
+  case class BroadcastCom(com: Communication) extends CommunicationType
 
 }
