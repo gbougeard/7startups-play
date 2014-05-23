@@ -1,7 +1,6 @@
 package models
 
 import models.Base._
-import scalaz.{Foldable, Monoid}
 import scalaz._
 import Scalaz._
 import scala.collection.Bag
@@ -71,19 +70,20 @@ object Cards {
   }
 
   sealed trait Card
+
   case class RegularCard(cName: String,
-                  cMinPlayers: PlayerCount,
-                  cAge: Age,
-                  cType: CardType,
-                  cCost: Cost,
-                  cFree: Set[String],
-                  cEffects: Set[Effect]
-                   ) extends Card
+                         cMinPlayers: PlayerCount,
+                         cAge: Age,
+                         cType: CardType,
+                         cCost: Cost,
+                         cFree: Set[String],
+                         cEffects: Set[Effect]
+                          ) extends Card
 
   case class CompanyCard(cCompany: CompanyProfile,
-                                cStage: CompanyStage,
-                                cCost: Cost,
-                                cEffects: Set[Effect]) extends Card
+                         cStage: CompanyStage,
+                         cCost: Cost,
+                         cEffects: Set[Effect]) extends Card
 
   type Exchange = Map[Neighbor, Bag[Resource]]
 

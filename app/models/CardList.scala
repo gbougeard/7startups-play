@@ -34,7 +34,7 @@ object CardList {
     }
   }
 
-  def getResourceCard(profile: CompanyProfile, stage: CompanyStage): Card = {
+  def getResourceCard(profile: CompanyProfile, stage: CompanyStage): CompanyCard = {
     val aSideEffects : Set[Effect] = Set(AddVictory(CompanyVictory, 3, HappensOnce))
 
     stage match {
@@ -152,7 +152,7 @@ object CardList {
     }
   }
 
-  lazy val communities: Set[Card] = Set(
+  lazy val communities: Set[RegularCard] = Set(
     community("Workers Union",        cost("FFDOM"),  Set(perCard(1, neighbors, Set(BaseResource)))),  // "FFDOM"
     community("Hipster Bar",          cost("FFOO"),   Set(perCard(2, neighbors, Set(AdvancedResource)))),  // "FFOO"
     community("Caviar Restaurant",    cost("YVA"),    Set(perCard(1, neighbors, Set(Commercial)))),  // "YVA"
@@ -165,7 +165,7 @@ object CardList {
     community("Company Monument",     cost("OODDY"),  Set(AddVictory(CommunityVictory, 1, ByStartupStage(everyone))))  // "OODDY"
   )
 
-  def community(name: String, cost: Cost, effects: Set[Effect]): Card =
+  def community(name: String, cost: Cost, effects: Set[Effect]): RegularCard =
     RegularCard(cName = name,
       cMinPlayers = 0,
       cAge = Age3,
@@ -177,7 +177,7 @@ object CardList {
   def perCard(victoryPoint: VictoryPoint, target: Target, cardType: Set[CardType]): Effect =
     AddVictory(CommunityVictory, victoryPoint, PerCard(target, cardType))
   
-  lazy val allCards :Set[Card] = Set(
+  lazy val allCards :Set[RegularCard] = Set(
     RegularCard( "Marketroid"            ,3, Age1, BaseResource, cost( "" ), Set(),Set(ProvideResource( Marketing ,1, Shared)))
   , RegularCard( "Marketroid"            ,4, Age1, BaseResource, cost( "" ), Set(),Set(ProvideResource( Marketing ,1, Shared)))
   , RegularCard( "IT Technician"         ,3, Age1, BaseResource, cost( "" ), Set(),Set(ProvideResource( Operations ,1, Shared)))

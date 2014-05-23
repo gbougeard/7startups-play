@@ -18,17 +18,21 @@ object Base {
   object Stage4 extends CompanyStage
 
   sealed trait Company
-  object Facebook extends Company
-  object Twitter extends Company
-  object Apple extends Company
-  object Google extends Company
-  object Yahoo extends Company
-  object Amazon extends Company
-  object Microsoft extends Company
+  object Facebook extends Company {override def toString = "Facebook"}
+  object Twitter extends Company  {override def toString = "Twitter"}
+  object Apple extends Company    {override def toString = "Apple"}
+  object Google extends Company   {override def toString = "Google"}
+  object Yahoo extends Company    {override def toString = "Yahoo"}
+  object Amazon extends Company   {override def toString = "Amazon"}
+  object Microsoft extends Company{override def toString = "Micro$oft"}
+
+  lazy val companies: Set[Company] = Set(Facebook, Twitter, Apple, Google, Yahoo, Amazon, Microsoft)
 
   sealed trait CompanySide
-  object ASide extends CompanySide
-  object BSide extends CompanySide
+  object ASide extends CompanySide {override def toString = "A"}
+  object BSide extends CompanySide {override def toString = "B"}
+
+  lazy val sides: Set[CompanySide] = Set(ASide, BSide)
   
   case class CompanyProfile(company:Company, side:CompanySide)
 
