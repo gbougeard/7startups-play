@@ -11,37 +11,37 @@ import scala.collection.Bag
 object Cards {
 
   sealed trait CardType
-  object BaseResource extends CardType
-  object AdvancedResource extends CardType
-  object Infrastructure extends CardType
-  object ResearchDevelopment extends CardType
-  object Commercial extends CardType
-  object HeadHunting extends CardType
-  object Community extends CardType
+  case object BaseResource extends CardType         // The "brown" cards, provide basic resources
+  case object AdvancedResource extends CardType     // The "grey" cards, provide advanced resources
+  case object Infrastructure extends CardType       // The "blue" cards, directly give victory points
+  case object ResearchDevelopment extends CardType  // The "green" cards, the more you have, the more victory points you get
+  case object Commercial extends CardType           // The "gold" cards, mainly get you funding
+  case object HeadHunting extends CardType          // The "red" cards, giving poaching power
+  case object Community extends CardType            // The "purple" cards, giving victory points according to various conditions
 
   sealed trait Neighbor
-  object NLeft extends Neighbor
-  object NRight extends Neighbor
+  case object NLeft extends Neighbor
+  case object NRight extends Neighbor
   sealed trait EffectDirection
   case class Neighboring(neighbor:Neighbor) extends EffectDirection
-  object Own extends EffectDirection
+  case object Own extends EffectDirection
 
   type Target = Set[EffectDirection]
 
   sealed trait Condition
-  object HappensOnce extends Condition
+  case object HappensOnce extends Condition
   case class PerCard(target:Target, cardTypes:Set[CardType]) extends Condition
   case class ByPoachingResult(target:Target, poachingOutcomes:Set[PoachingOutcome]) extends Condition
   case class ByStartupStage(target:Target) extends Condition
 
   sealed trait Sharing
-  object Shared extends Sharing
-  object Kept extends Sharing
+  case object Shared extends Sharing
+  case object Kept extends Sharing
 
   sealed trait ResearchType
-  object Scaling extends ResearchType
-  object Programming extends ResearchType
-  object CustomSolution extends ResearchType
+  case object Scaling extends ResearchType
+  case object Programming extends ResearchType
+  case object CustomSolution extends ResearchType
 
   sealed trait Effect
   case class ProvideResource(resource: Resource, nb: Int, sharing: Sharing) extends Effect
@@ -51,34 +51,33 @@ object Cards {
   case class GainFunding(funding: Funding, condition: Condition) extends Effect
   case class RnD(researchType: ResearchType) extends Effect
   case class Poaching(poacher: Poacher) extends Effect
-  object ScientificBreakthrough extends Effect
-  object Recycling extends Effect
+  case object ScientificBreakthrough extends Effect
+  case object Recycling extends Effect
   case class Opportunity(ages: Set[Age]) extends Effect
-  object Efficiency extends Effect
-  object CopyCommunity extends Effect
+  case object Efficiency extends Effect
+  case object CopyCommunity extends Effect
 
-  object Effect {
-     def show(effect: Effect) :String = {
-         effect match {
-           case e: ProvideResource    =>  s"ProvideResource - ${e.resource} : ${e.nb}, ${e.sharing}"
-           case e: ResourceChoice     =>  s"ResourceChoice - ${e.resources}, ${e.sharing}"
-           case e: CheapExchange      =>  s"CheapExchange - ${e.resources}, ${e.neighbors}"
-           case e: AddVictory         =>  s"AddVictory - ${e.victoryType} : ${e.victoryPoint} if ${e.condition}"
-           case e: GainFunding        =>  s"GainFunding - ${e.funding}  if ${e.condition}"
-           case e: RnD                =>  s"RnD - ${e.researchType}"
-           case e: Poaching           =>  s"Poaching - ${e.poacher}"
-           case  ScientificBreakthrough =>s"ScientificBreakthrough"
-           case  Recycling            =>  s"Recycling"
-           case e: Opportunity        =>  s"Opportunity at ${e.ages}"
-           case  Efficiency           =>  s"Efficiency"
-           case  CopyCommunity        =>  s"CopyCommunity"
-         }
-     }
-  }
+//  object Effect {
+//     def show(effect: Effect) :String = {
+//         effect match {
+//           case e: ProvideResource    =>  s"ProvideResource - ${e.resource} : ${e.nb}, ${e.sharing}"
+//           case e: ResourceChoice     =>  s"ResourceChoice - ${e.resources}, ${e.sharing}"
+//           case e: CheapExchange      =>  s"CheapExchange - ${e.resources}, ${e.neighbors}"
+//           case e: AddVictory         =>  s"AddVictory - ${e.victoryType} : ${e.victoryPoint} if ${e.condition}"
+//           case e: GainFunding        =>  s"GainFunding - ${e.funding}  if ${e.condition}"
+//           case e: RnD                =>  s"RnD - ${e.researchType}"
+//           case e: Poaching           =>  s"Poaching - ${e.poacher}"
+//           case  ScientificBreakthrough =>s"ScientificBreakthrough"
+//           case  Recycling            =>  s"Recycling"
+//           case e: Opportunity        =>  s"Opportunity at ${e.ages}"
+//           case  Efficiency           =>  s"Efficiency"
+//           case  CopyCommunity        =>  s"CopyCommunity"
+//         }
+//     }
+//  }
 
   implicit val bagResource = Bag.configuration.compact[Resource]
   case class Cost(resources:Bag[Resource], funding:Funding)
-
   object Cost {
     def empty = Cost(Bag.empty, 0)
   }

@@ -1,0 +1,17 @@
+@(age:Int, hand: Map[GameTypes.PlayerId, List[Cards.RegularCard]])
+
+@main(s"Hand for Age $age") {
+    <ul>
+    @for(key <- hand.keys.toList.sortBy(x => x)){
+        <li>@key
+            <ul>
+            @for(card <- hand(key).sortBy(x => x.cName)) {
+                <li>@card</li>
+            }
+            </ul>
+        </li>
+    }
+    </ul>
+    <hr/>
+}
+

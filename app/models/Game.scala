@@ -13,9 +13,9 @@ import org.joda.time.DateTime
  */
 object Game {
 
-  def randomCommunities(nbPlayers: PlayerCount): Set[RegularCard] = {
+  def randomCommunities(nbPlayers: PlayerCount): List[RegularCard] = {
     Random.setSeed(new DateTime().getMillis)
-    Random.shuffle(communities).take(nbPlayers + 2)
+    Random.shuffle(communities.toList).take(nbPlayers + 2)
   }
 
   def randomCompanies(nbPlayers: PlayerCount): Set[Company] = {
@@ -31,21 +31,27 @@ object Game {
     playerList(nbPlayers).zip(profiles).toMap[PlayerId, CompanyCard]
   }
 
-  def addCommunities(age: Age, nbPlayers: PlayerCount): Set[RegularCard] = {
+  def addCommunities(age: Age, nbPlayers: PlayerCount): List[RegularCard] = {
     if (age == Age3) {
       randomCommunities(nbPlayers)
     }
-    else Set()
+    else List()
   }
 
-  def deal(age: Age, nbPlayers: PlayerCount): Map[PlayerId, Set[RegularCard]] = {
+  def deal(age: Age, nbPlayers: PlayerCount): Map[PlayerId, List[RegularCard]] = {
 
-    def filterByAgeAndPlayerCount(c: RegularCard): Boolean = (c.cAge == age) && (c.cMinPlayers >= nbPlayers)
+    def filterByAgeAndPlayerCount(c: RegularCard): Boolean = (c.cAge == age) && (c.cMinPlayers <= nbPlayers)
+    def filterByAge(c: RegularCard): Boolean = (c.cAge == age)
 
     val regularCards = allCards.filter(filterByAgeAndPlayerCount) ++ addCommunities(age, nbPlayers)
+//    play.Logger.debug(s"total : ${allCards.size} byAge :  ${allCards.filter(filterByAge).size} filtered : ${allCards.filter(filterByAgeAndPlayerCount).size} communities : ${addCommunities(age, nbPlayers).size} => for $nbPlayers you have ${regularCards.size} cards")
 
-    val hands = Random.shuffle(regularCards).grouped(7).toList
-    playerList(nbPlayers).zip(hands).toMap[PlayerId, Set[RegularCard]]
+//    allCards.filter(filterByAgeAndPlayerCount).map(println)
+    Random.setSeed(new DateTime().getMillis)
+    val shuffleCards = Random.shuffle(regularCards.toList)
+    val hands = shuffleCards.grouped(7).toList
+//    play.Logger.debug(s"hands $hands")
+    playerList(nbPlayers).zip(hands).toMap[PlayerId, List[RegularCard]]
 
   }
 

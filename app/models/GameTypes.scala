@@ -3,7 +3,6 @@ package models
 import models.Base._
 import models.Cards._
 import scala.util.Random
-import scalaz.MonadState
 
 /**
  * Created by gbougeard on 22/05/14.
@@ -26,9 +25,9 @@ object GameTypes {
                        rnd: Random)
 
   sealed trait ActionType
-  object Play extends ActionType
-  object Drop extends ActionType
-  object BuildCompany extends ActionType
+  case object Play extends ActionType
+  case object Drop extends ActionType
+  case object BuildCompany extends ActionType
 
   case class PlayerAction(actionType: ActionType, card: Card)
 
