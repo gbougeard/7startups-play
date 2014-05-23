@@ -77,7 +77,7 @@ object CardList {
                                                                        Recycling))
 
           case CompanyProfile(Microsoft, ASide) => (cost("OO"),   aSideEffects)
-          case CompanyProfile(Microsoft, BSide) => (cost("MM"), Set(AddVictory(CompanyVictory, 3, HappensOnce)))
+          case CompanyProfile(Microsoft, BSide) => (cost("MM"),   Set(AddVictory(CompanyVictory, 3, HappensOnce)))
 
           case _ => throw new IllegalArgumentException("Invalid card")
           }

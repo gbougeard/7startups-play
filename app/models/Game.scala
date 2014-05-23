@@ -13,14 +13,16 @@ import org.joda.time.DateTime
  */
 object Game {
 
-  def randomCommunities(nbPlayers: PlayerCount) : Set[RegularCard] = {
+  def randomCommunities(nbPlayers: PlayerCount): Set[RegularCard] = {
     Random.setSeed(new DateTime().getMillis)
     Random.shuffle(communities).take(nbPlayers + 2)
   }
+
   def randomCompanies(nbPlayers: PlayerCount): Set[Company] = {
     Random.setSeed(new DateTime().getMillis)
     Random.shuffle(companies).take(nbPlayers)
   }
+
   def randomSide: CompanySide = Gen.pick(1, sides).sample.get.head
 
 
@@ -38,17 +40,17 @@ object Game {
 
   def deal(age: Age, nbPlayers: PlayerCount): Map[PlayerId, Set[RegularCard]] = {
 
-    def filterbyAgeAndPlayerCount(c: RegularCard): Boolean = (c.cAge == age) && (c.cMinPlayers >= nbPlayers)
+    def filterByAgeAndPlayerCount(c: RegularCard): Boolean = (c.cAge == age) && (c.cMinPlayers >= nbPlayers)
 
-    val regulardCards = allCards.filter(filterbyAgeAndPlayerCount) ++ addCommunities(age, nbPlayers)
+    val regularCards = allCards.filter(filterByAgeAndPlayerCount) ++ addCommunities(age, nbPlayers)
 
-    val hands = Random.shuffle(regulardCards).grouped(7).toList
+    val hands = Random.shuffle(regularCards).grouped(7).toList
     playerList(nbPlayers).zip(hands).toMap[PlayerId, Set[RegularCard]]
 
   }
 
-  def playerList(nbPlayers:PlayerCount): Set[PlayerId] = {
-    val players = for(i <- 1 to nbPlayers) yield s"Player$i"
+  def playerList(nbPlayers: PlayerCount): Set[PlayerId] = {
+    val players = for (i <- 1 to nbPlayers) yield s"Player$i"
     players.toSet
   }
 

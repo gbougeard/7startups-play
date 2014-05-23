@@ -1,0 +1,16 @@
+@(hand: Map[GameTypes.PlayerId, Cards.CompanyCard])
+
+    @main("Companies") {
+        <ul>
+        @for(key <- hand.keys.toList.sortBy(x => x)){
+            <li>@key : @hand(key).cCompany.company - @hand(key).cCompany.side - @hand(key).cCost
+                <ul>
+                    @for(effect <- hand(key).cEffects) {
+                    <li>@Cards.Effect.show(effect)</li>
+                    }
+                </ul>
+            </li>
+        }
+        </ul>
+    }
+

@@ -57,6 +57,25 @@ object Cards {
   object Efficiency extends Effect
   object CopyCommunity extends Effect
 
+  object Effect {
+     def show(effect: Effect) :String = {
+         effect match {
+           case e: ProvideResource    =>  s"ProvideResource - ${e.resource} : ${e.nb}, ${e.sharing}"
+           case e: ResourceChoice     =>  s"ResourceChoice - ${e.resources}, ${e.sharing}"
+           case e: CheapExchange      =>  s"CheapExchange - ${e.resources}, ${e.neighbors}"
+           case e: AddVictory         =>  s"AddVictory - ${e.victoryType} : ${e.victoryPoint} if ${e.condition}"
+           case e: GainFunding        =>  s"GainFunding - ${e.funding}  if ${e.condition}"
+           case e: RnD                =>  s"RnD - ${e.researchType}"
+           case e: Poaching           =>  s"Poaching - ${e.poacher}"
+           case  ScientificBreakthrough =>s"ScientificBreakthrough"
+           case  Recycling            =>  s"Recycling"
+           case e: Opportunity        =>  s"Opportunity at ${e.ages}"
+           case  Efficiency           =>  s"Efficiency"
+           case  CopyCommunity        =>  s"CopyCommunity"
+         }
+     }
+  }
+
   implicit val bagResource = Bag.configuration.compact[Resource]
   case class Cost(resources:Bag[Resource], funding:Funding)
 
@@ -77,8 +96,7 @@ object Cards {
                          cType: CardType,
                          cCost: Cost,
                          cFree: Set[String],
-                         cEffects: Set[Effect]
-                          ) extends Card
+                         cEffects: Set[Effect]) extends Card
 
   case class CompanyCard(cCompany: CompanyProfile,
                          cStage: CompanyStage,
