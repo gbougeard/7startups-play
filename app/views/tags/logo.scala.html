@@ -1,0 +1,12 @@
+@(company: Base.Company)
+@defining(company match {
+    case Base.Amazon => "adn"
+    case Base.Apple => "apple"
+    case Base.Facebook => "facebook-square"
+    case Base.Google => "google"
+    case Base.Microsoft => "windows"
+    case Base.Twitter => "twitter-square"
+    case Base.Yahoo => "yahoo"
+} ){ logo =>
+<i class="fa fa-@logo"></i>
+}

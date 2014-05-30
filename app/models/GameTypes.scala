@@ -16,14 +16,13 @@ object GameTypes {
 
   case class PlayerState(pCompany: CompanyProfile,
                          pCompanyStage: CompanyStage,
-                         pCards: List[RegularCard],
+                         pCards: List[Card],
                          pFunds: Funding,
                          pNeighborhood: Neighborhood,
                          pPoachingResults: Set[PoachingOutcome])
 
   case class GameState(playerMap: Map[PlayerId, PlayerState],
-                       discardPile: List[RegularCard],
-                       rnd: Random)
+                       discardPile: List[RegularCard])
 
   sealed trait ActionType
   case object Play extends ActionType
@@ -32,8 +31,8 @@ object GameTypes {
 
   case class PlayerAction(actionType: ActionType, card: RegularCard)
 
-  type NonInteractive = MonadState[GameState, Int]
-  type GameStateOnly = MonadState[GameState, Int]
+//  type NonInteractive = MonadState[GameState, Int]
+//  type GameStateOnly = MonadState[GameState, Int]
 
   sealed trait Communication
   case class RawMessage(msg: String) extends Communication

@@ -1,0 +1,24 @@
+@(gameState: GameTypes.GameState)
+
+@import tags._
+
+@main(s"GameState after init") {
+    <ul>
+    @for(key <- gameState.playerMap.keys){
+        @defining(gameState.playerMap(key)){ playerState =>
+            <li>player : @key - @logo(playerState.pCompany.company) - @stage(playerState.pCompanyStage) - @fund(playerState.pFunds) - @neigh(playerState.pNeighborhood)
+                <ul>
+                @for(card <- playerState.pCards) {
+                    <li>@card</li>
+                }
+                </ul>
+                @playerState
+            </li>
+        }
+
+    }
+    </ul>
+    <hr/>
+    @gameState
+}
+

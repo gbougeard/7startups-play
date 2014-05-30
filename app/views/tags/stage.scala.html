@@ -1,0 +1,10 @@
+@(company: Base.CompanyStage)
+@defining(company match {
+    case Base.Project => "cogs"
+    case Base.Stage1 => "child"
+    case Base.Stage2 => "building"
+    case Base.Stage3 => "institution"
+    case Base.Stage4 => "empire"
+} ){ logo =>
+<i class="fa fa-@logo"></i>
+}

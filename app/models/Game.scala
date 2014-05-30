@@ -60,26 +60,28 @@ object Game {
     players.toSet
   }
 
-  def init(nbPlayers: PlayerCount) = {
+  def init(nbPlayers: PlayerCount): GameState = {
     val companies: Map[PlayerId, CompanyCard] = dealCompanies(nbPlayers)
     val players: Set[PlayerId] = playerList(nbPlayers)
-    val age1Hand: Map[PlayerId, List[RegularCard]] = deal(Age1, nbPlayers)
 
-    val age1PlayerStates = players.map(player => PlayerState(pCompany = companies.get(player).get.cCompany,
-                                                             pCompanyStage = Project,
-                                                             pCards = age1Hand.get(player).get,
-                                                             pFunds = 3,
-                                                             pNeighborhood = getNeighborhood(players.toList, player),
-                                                             pPoachingResults = Set()))
+    val age1PlayerStatesMap = players.map { player =>
+      (player, PlayerState(pCompany = companies.get(player).get.cCompany,
+        pCompanyStage = Project,
+        pCards = List(getResourceCard(companies.get(player).get.cCompany, Project)),
+        pFunds = 3,
+        pNeighborhood = getNeighborhood(players.toList, player),
+        pPoachingResults = Set()))
+    }.toMap
 
+    GameState(age1PlayerStatesMap, List())
   }
 
   def getNeighborhood(players : List[PlayerId], player:PlayerId): Neighborhood = {
     val rightIdx = players.indexOf(player) +1
     val leftIdx = players.indexOf(player) -1
 
-    val right = if (rightIdx > players.size) players.head else players(rightIdx)
-    val left = if (leftIdx < 0) players.last else players(leftIdx)
+    val left =  if (leftIdx < 0) players(players.size -1) else players(leftIdx)
+    val right = if (rightIdx >= players.size) players.head else players(rightIdx)
     (left, right)
   }
 

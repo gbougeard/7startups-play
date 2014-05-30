@@ -18,13 +18,13 @@ object Base {
   case object Stage4 extends CompanyStage
 
   sealed trait Company
-  case object Facebook extends Company
-  case object Twitter extends Company
-  case object Apple extends Company
-  case object Google extends Company
-  case object Yahoo extends Company
   case object Amazon extends Company
+  case object Apple extends Company
+  case object Facebook extends Company
+  case object Google extends Company
   case object Microsoft extends Company
+  case object Twitter extends Company
+  case object Yahoo extends Company
 
   lazy val companies: Set[Company] = Set(Facebook, Twitter, Apple, Google, Yahoo, Amazon, Microsoft)
 

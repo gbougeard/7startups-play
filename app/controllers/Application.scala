@@ -25,4 +25,10 @@ object Application extends Controller {
     val deal = Game.deal(a, nbPlayer)
     Ok(views.html.deal(age, deal))
   }
+
+  def init(nbPlayer: Int) = Action {
+
+    val deal = Game.init(nbPlayer)
+    Ok(views.html.init(deal))
+  }
 }
