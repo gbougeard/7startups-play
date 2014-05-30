@@ -1,0 +1,7 @@
+@(effect: Cards.Effect)
+@defining(effect match {
+    case r: Cards.ProvideResource => rsc(r.resource)
+
+}) { logo =>
+effect: @logo
+}

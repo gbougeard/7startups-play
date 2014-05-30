@@ -8,8 +8,8 @@
         @defining(gameState.playerMap(key)){ playerState =>
             <li>player : @key - @logo(playerState.pCompany.company) - @stage(playerState.pCompanyStage) - @fund(playerState.pFunds) - @neigh(playerState.pNeighborhood)
                 <ul>
-                @for(card <- playerState.pCards) {
-                    <li>@card</li>
+                @for(c <- playerState.pCards) {
+                    <li>@c @card(c)</li>
                 }
                 </ul>
                 @playerState

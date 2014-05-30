@@ -1,0 +1,12 @@
+@(rsc: Base.Resource)
+@defining(rsc match {
+    case Base.Youthfulness => "graduation-cap"
+    case Base.Vision => "magic"
+    case Base.Adoption => "heart-o"
+    case Base.Development => "code"
+    case Base.Operations => "cubes"
+    case Base.Marketing => "female"
+    case Base.Finance => "bar-chart-o"
+}) { logo =>
+    <i class="fa fa-@logo"></i>
+}

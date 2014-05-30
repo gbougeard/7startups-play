@@ -1,0 +1,7 @@
+@(card: Cards.Card)
+@defining(card match {
+    case c: Cards.CompanyCard => c.cEffects.map(e => effect(e))
+    case c: Cards.RegularCard => c.cName
+}) { logo =>
+    @logo
+}
