@@ -3,7 +3,7 @@ import Keys._
 
 object Dependencies {
   // Versions
-  val akkaVersion = "2.2.2"
+  val akkaVersion = "2.3.3"
   val logbackVersion = "1.1.1"
   val slf4jVersion = "1.7.6"
   val mysqlVersion = "5.1.30"
@@ -17,7 +17,7 @@ object Dependencies {
   val specs2Version = "2.3.11"
   val scalazVersion = "7.0.4"
 
-  val webjarsVersion = "2.2.1-2"
+  val webjarsVersion = "2.3.0-RC1-1"
   val wjAngularVersion = "1.2.16"
   val wjAngularMotionVersion = "0.3.2"
   val wjAngularUiVersion = "0.4.0-2"

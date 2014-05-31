@@ -3,22 +3,25 @@
 @import tags._
 
 @main(s"GameState after init") {
-    <ul>
     @for(key <- gameState.playerMap.keys){
         @defining(gameState.playerMap(key)){ playerState =>
-            <li>player : @key - @logo(playerState.pCompany.company) - @stage(playerState.pCompanyStage) - @fund(playerState.pFunds) - @neigh(playerState.pNeighborhood)
-                <ul>
+            <div class="panel panel-default col-lg-2">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@logo(playerState.pCompany.company) @key </h3>
+                </div>
+                <div class="panel-body">
+                     @stage(playerState.pCompanyStage) - @fund(playerState.pFunds) - @neigh(playerState.pNeighborhood)
+
+                </div>
+                <ul class="list-group">
                 @for(c <- playerState.pCards) {
-                    <li>@c @card(c)</li>
+                    <li class="list-group-item">@card(c) @c</li>
                 }
                 </ul>
-                @playerState
-            </li>
+            </div>
         }
 
     }
-    </ul>
     <hr/>
-    @gameState
 }
 

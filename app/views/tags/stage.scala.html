@@ -1,10 +1,10 @@
-@(company: Base.CompanyStage)
-@defining(company match {
+@(stage: Base.CompanyStage)
+@defining(stage match {
     case Base.Project => "cogs"
     case Base.Stage1 => "child"
     case Base.Stage2 => "building"
     case Base.Stage3 => "institution"
     case Base.Stage4 => "empire"
 } ){ logo =>
-<i class="fa fa-@logo"></i>
+<i class="fa fa-@logo" data-toggle="tooltip" data-placement="top" title="@stage"></i>
 }
